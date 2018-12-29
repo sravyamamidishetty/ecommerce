@@ -1,0 +1,20 @@
+<flow start-state="start" xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/webflow">
+
+<var class="com.xyz.model.Student" name="dataObject"/>
+<view-state id="start" view="page1.jsp" model="dataObject" >
+       <transition on="nextOnPage1" to="displayPage2"/>
+    </view-state>
+    
+ <view-state id="displayPage2" view="page2.jsp" model="dataObject" >
+ 		<transition on="backOnPage2" to="start"/>
+        <transition on="nextOnPage2" to="calculateResult"/>
+ </view-state>
+ 	<action-state id="calculateResult">
+ 	<evaluate expression="studentDAOImp.validateStudent(dataObject)" result="dataObject"/>
+ 	<transition to="displayPage3"/>
+ 	</action-state>   
+    
+    <view-state id="displayPage3" view="page3.jsp" model="dataObject" >
+ 		<transition on="backOnPage3" to="displayPage2"/>
+ </view-state>
+    </flow>
